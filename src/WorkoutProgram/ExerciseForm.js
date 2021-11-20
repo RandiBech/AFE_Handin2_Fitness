@@ -26,7 +26,8 @@ export function ExerciseForm() {
 
 	function handleSumbmit(event) {
 		alert('exercise: ' + state.name + '. Description: ' + state.description + '. Sets: ' + state.sets);
-		// TODO:
+		event.preventDefault();
+		//TODO:
 		// tilføj øvelse til WorkoutProgram man er under
 		// create new exercise in backend for this user/ trainer?
 

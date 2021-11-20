@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { addExerciseToWorkoutProgram } from '../Helpers/ExercisesApi';
 
 export function ExerciseForm() {
 	const initialState = {
@@ -25,6 +26,12 @@ export function ExerciseForm() {
 
 	function handleSumbmit(event) {
 		alert('exercise: ' + state.name + '. Description: ' + state.description + '. Sets: ' + state.sets);
+		// TODO:
+		// tilføj øvelse til WorkoutProgram man er under
+		// create new exercise in backend?
+
+		// make post call to backend
+		// await addExerciseToWorkoutProgram(state); // mangler WorkoutProgram ID
 	}
 
 	return (

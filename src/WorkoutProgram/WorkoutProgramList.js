@@ -50,27 +50,6 @@ export default class WorkoutProgramList extends Component {
 					</tbody>
 				</table>
 			</div>
-			// <ul>
-			//     {this.state.workoutPrograms.map(program => )}
-			// </ul>
 		);
 	}
 }
-// 	useEffect(() => {
-// 		const fetchWorkoutPrograms = async () => {
-// 			const result = await axios('https://afe2021fitness.azurewebsites.net/api/WorkoutPrograms/trainer');
-
-// 			setData(result.data);
-// 		};
-
-// 		fetchWorkoutPrograms();
-// 	}, []); // har denne nogle dependencies?
-
-// 	return (
-// 		<ul>
-// 			{data.workoutPrograms.map((program) => {
-// 				<li key={program.workoutProgramId}>{program.json()}</li>;
-// 			})}
-// 		</ul>
-// 	);
-// }

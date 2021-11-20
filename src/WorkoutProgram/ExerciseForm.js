@@ -28,7 +28,7 @@ export function ExerciseForm() {
 		alert('exercise: ' + state.name + '. Description: ' + state.description + '. Sets: ' + state.sets);
 		// TODO:
 		// tilføj øvelse til WorkoutProgram man er under
-		// create new exercise in backend?
+		// create new exercise in backend for this user/ trainer?
 
 		// make post call to backend
 		// await addExerciseToWorkoutProgram(state); // mangler WorkoutProgram ID

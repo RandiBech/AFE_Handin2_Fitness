@@ -42,7 +42,7 @@ function App() {
       <Navbar />
       <Routes>
         <Route path="/home" element={<Home />} />
-        <Route path="/WorkoutList" element={<WorkoutList />} />
+        <Route path="/WorkoutOverview" element={<WorkoutList />} />
       </Routes>
     </Router>
   );

@@ -1,50 +1,41 @@
 import "./App.css";
 import Login from "./Login/Login";
 import Home from "./Home";
-import { useEffect, useState } from "react";
+import { Route, Routes } from "react-router";
+import WorkoutProgramList from "./WorkoutProgram/WorkoutProgramList";
+import RequireAuth from "./Login/RequireAuth";
+import { useAuth } from "./Helpers/useAuth";
+import Clients from "./Client/ClientList";
+import { Roles } from "./Helpers/Roles";
 import { Navbar } from "./NavigationBar";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import WorkoutList from "./WorkoutProgram/WorkoutProgramList";
 
 function App() {
-  const [decodedTokenHeader, setDecodedToken] = useState();
-  const [decodedTokenPayload, setDecodedPayload] = useState();
-
-  useEffect(() => {
-    const jwtToken = localStorage.getItem("jwtToken");
-    if (jwtToken) {
-      const tokenArray = jwtToken.split(".");
-      const tokenHeader = tokenArray[0];
-      const tokenPayload = tokenArray[1].split(".")[0];
-      setDecodedToken(window.atob(tokenHeader));
-      setDecodedPayload(window.atob(tokenPayload));
-    }
-  }, []);
-
-  function onLoggedIn() {
-    const newJwtToken = localStorage.getItem("jwtToken").split(".");
-    console.log(newJwtToken);
-    setDecodedToken(window.atob(newJwtToken[0]));
-
-    const newTokenArray = localStorage.getItem("jwtToken").split(".");
-    const newTokenHeader = newTokenArray[0];
-    const newTokenPayload = newTokenArray[1].split(".")[0];
-    setDecodedToken(window.atob(newTokenHeader));
-    setDecodedPayload(window.atob(newTokenPayload));
-  }
-
+  const { logout } = useAuth();
   return (
-    <Router>
-      <div className="App">
-        <header className="App-header"></header>
-        {decodedTokenPayload ? <Home /> : <Login onLoggedIn={onLoggedIn} />}
-      </div>
-      <Navbar />
+    <div className="App">
+      <header className="App-header">
+        {/* <RequireAuth children={<button onClick={logout}>Log out</button>}></RequireAuth> */}
+      </header>
       <Routes>
-        <Route path="/home" element={<Home />} />
-        <Route path="/WorkoutOverview" element={<WorkoutList />} />
+        <Route path="/" element={<Home />} />
+        <Route
+          path="/workoutprograms"
+          element={
+            <RequireAuth children={<WorkoutProgramList />}></RequireAuth>
+          }
+        />
+        <Route
+          path="/clients"
+          element={
+            <RequireAuth
+              children={<Clients />}
+              rolesRequired={[Roles.Client]}
+            ></RequireAuth>
+          }
+        />
+        <Route path="/login" element={<Login />} />
       </Routes>
-    </Router>
+    </div>
   );
 }
 

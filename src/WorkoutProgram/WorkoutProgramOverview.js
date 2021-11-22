@@ -1,26 +1,38 @@
-import React, { useEffect, useState } from "react";
-import { workoutList } from "../Helpers/WorkoutList";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 
-function WorkoutList() {
-  const [data, setData] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
-  const [isError, setIsError] = useState(false);
+export function UseAxios() {
+  const [data, setData] = useState({ hits: [] });
 
-  async function handleList() {
-    await workoutList();
-  }
+  localStorage.setItem("jwtToken", jwtToken);
+
+  const config = {
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Beare ${jwtToken}`,
+    },
+  };
 
   useEffect(() => {
+    const fetchData = async () => {
+      const result = await axios.get(
+        "https://afe2021fitness.azurewebsites.net/api/WorkoutPrograms",
+        config
+      );
+
+      setData(([hits] = result.data));
+    };
+
     fetchData();
   }, []);
-  if (isLoading) {
-    return <div>Loading....</div>;
-  }
+
   return (
-    <div>
-      <h1>Workout Overview</h1>
-      {data}
-      {isError && <div>Error fetching data...</div>}
-    </div>
+    <ul>
+      {data.hits.map((item) => (
+        <li key={item.objectID}>
+          <a href={item.url}>{item.title}</a>
+        </li>
+      ))}
+    </ul>
   );
 }

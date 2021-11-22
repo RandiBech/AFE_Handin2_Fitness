@@ -1,15 +1,23 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 
-function WorkoutList() {
+function WorkoutOverview() {
   const [data, setData] = useState({ workouts: [] });
+  const currentJwtToken = localStorage.getItem("jwtToken");
+  const config = {
+    headers: {
+      Authorization: `Bearer ${currentJwtToken}`,
+    },
+  };
+  console.log("config", config);
 
   useEffect(() => {
     const fetchData = async () => {
-      const result = await axios(
-        "https://afe2021fitness.azurewebsites.net/api/WorkoutPrograms"
+      const result = await axios.get(
+        "https://afe2021fitness.azurewebsites.net/api/WorkoutPrograms",
+        config
       );
-      setData(result.data);
+      setData({ workouts: result.data });
     };
     fetchData();
   }, []);
@@ -17,12 +25,10 @@ function WorkoutList() {
   return (
     <ul>
       {data.workouts.map((item) => (
-        <li key={item.workoutProgramId}>
-          <a href={item.name}>{item.description}</a>
-        </li>
+        <li key={item.workoutProgramId}>{item.name}</li>
       ))}
     </ul>
   );
 }
 
-export default WorkoutList;
+export default WorkoutOverview;

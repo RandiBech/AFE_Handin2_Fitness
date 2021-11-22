@@ -1,9 +1,10 @@
 import React, { useState } from "react";
-import { login } from "../Helpers/LoginUser";
+import { useAuth } from "../Helpers/useAuth";
 
-function Login({onLoggedIn}) {
+function Login() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const { login } = useAuth();
 
     function handleChangeEmail(event){
         setEmail(event.target.value);
@@ -12,10 +13,9 @@ function Login({onLoggedIn}) {
         setPassword(event.target.value);
     }
 
-    async function handleLogin(event){
+    function handleLogin(event){
         event.preventDefault();
-        await login(email, password);
-        onLoggedIn();
+        login(email, password)
     }
 
 return(

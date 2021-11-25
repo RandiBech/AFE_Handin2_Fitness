@@ -1,8 +1,66 @@
-function Clients(){
-    return(
+import React, { useEffect, useState } from 'react';
+import { GetAllClients } from '../Helpers/ClientsApi';
+import { makeStyles } from '@mui/styles';
+
+const useStyles = makeStyles({
+    addBtn: {
+        width: '100px',
+        height: '30px',
+        backgroundColor: '#498787',
+        borderRadius: '4px',
+        border: 'none',
+        margin: '16px',
+        alignSelf: 'end'
+    },
+    clients: {
+        padding: '0 20px'
+    },
+    clientItem: {
+        textAlign: 'left',
+        margin: '8px 0'
+    },
+    line: {
+        height: '0.5px',
+        backgroundColor: 'black',
+        width: '80%'
+    }
+})
+
+function ClientList() {
+    const classes = useStyles();
+    const [clients, setClients] = useState([]);
+
+    useEffect(() => {
+        async function getClients() {
+            await GetAllClients().then(data => {
+                setClients(data)
+                console.log('data', data)
+            });
+        }
+        getClients();
+        console.log(clients);
+    }, []);
+
+    if (clients.length <= 0) return <div>loading...</div>;
+
+    return (
         <div>
-            hello!
+            <div>
+                <h2>Clients</h2>
+                <button className={classes.addBtn}>Add client</button>
+            </div>
+            <div className={classes.clients}>
+                {clients.map((client, i) =>
+                (
+                    <>
+                        <div key={i} className={classes.clientItem}>
+                            {client.firstName} {client.lastName}, email: {client.email}
+                        </div>
+                        <div className={classes.line}></div>
+                    </>
+                ))}
+            </div>
         </div>
     )
 }
-export default Clients;
+export default ClientList;

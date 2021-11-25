@@ -5,7 +5,7 @@ import { Route, Routes } from 'react-router';
 import WorkoutProgramList from './WorkoutProgram/WorkoutProgramList';
 import RequireAuth from './Login/RequireAuth';
 import { useAuth } from './Helpers/useAuth';
-import Clients from './Client/ClientList';
+import ClientList from './Client/ClientList';
 import { Roles } from './Helpers/Roles';
 
 function App() {
@@ -24,10 +24,12 @@ function App() {
           </RequireAuth>
         } />
         <Route path="/clients" 
-        element={
-          <RequireAuth children={<Clients/>} rolesRequired={[Roles.Client]}>
-          </RequireAuth>
-        } />
+        element={<ClientList/>}
+        // {
+        //   <RequireAuth children={<Clients/>} rolesRequired={[Roles.Client]}>
+        //   </RequireAuth>
+        // } 
+        />
         <Route path="/login" element={<Login/>} />
       </Routes>
       

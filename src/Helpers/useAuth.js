@@ -1,8 +1,10 @@
-import { useState } from "react";
+import { createContext, useState } from "react";
 import { useNavigate } from "react-router";
+import { useAuthContext } from "../Context/auth-context";
 
-export function useAuth() {
-    const [authed, setAuthed] = useState(false);
+function useAuth() {
+    // const [auth, setAuth] = useAuthContext();
+    const [authed, setAuthed] = useState();
     const [tokenPayload, setTokenPayload] = useState('');
     const [jwtToken, setJwtToken] = useState('');
     const navigate = useNavigate();
@@ -49,5 +51,7 @@ export function useAuth() {
         login,
         logout
     }
-
 }
+
+
+export { useAuth };

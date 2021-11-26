@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { GetAllClients } from '../Helpers/ClientsApi';
 import { makeStyles } from '@mui/styles';
+import { Link } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 
 const useStyles = makeStyles({
     addBtn: {
@@ -17,7 +19,8 @@ const useStyles = makeStyles({
     },
     clientItem: {
         textAlign: 'left',
-        margin: '8px 0'
+        margin: '8px 0',
+        cursor: 'pointer'
     },
     line: {
         height: '0.5px',
@@ -29,7 +32,7 @@ const useStyles = makeStyles({
 function ClientList() {
     const classes = useStyles();
     const [clients, setClients] = useState([]);
-
+    const navigate = useNavigate();
     useEffect(() => {
         async function getClients() {
             await GetAllClients().then(data => {
@@ -40,6 +43,10 @@ function ClientList() {
         getClients();
         console.log(clients);
     }, []);
+
+    function handleClientClick(client) {
+        navigate('/Clients/' + client.userId, { state: client })
+    }
 
     if (clients.length <= 0) return <div>loading...</div>;
 
@@ -53,9 +60,16 @@ function ClientList() {
                 {clients.map((client, i) =>
                 (
                     <>
-                        <div key={i} className={classes.clientItem}>
-                            {client.firstName} {client.lastName}, email: {client.email}
-                        </div>
+                    <button onClick={() => handleClientClick(client)} key={i} className={classes.clientItem}>
+                        {client.firstName} {client.lastName}, email: {client.email}
+                    </button>
+                    
+                    {/* <Link to={{ 
+                        pathname: "/Clients/" + client.userId, 
+                        state: client 
+                        }} key={i} className={classes.clientItem}>
+                        {client.firstName} {client.lastName}, email: {client.email}
+                    </Link> */}
                         <div className={classes.line}></div>
                     </>
                 ))}

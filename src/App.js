@@ -7,6 +7,7 @@ import RequireAuth from './Login/RequireAuth';
 import { useAuth } from './Helpers/useAuth';
 import ClientList from './Client/ClientList';
 import { Roles } from './Helpers/Roles';
+import ClientDetail from './Client/ClientDetail';
 
 function App() {
   const {logout} = useAuth();
@@ -30,6 +31,7 @@ function App() {
         //   </RequireAuth>
         // } 
         />
+        <Route path="/clients/:id" element={<ClientDetail/>}></Route>
         <Route path="/login" element={<Login/>} />
       </Routes>
       

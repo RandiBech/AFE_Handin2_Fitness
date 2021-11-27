@@ -1,55 +1,52 @@
-import { useEffect, useState, Component } from 'react';
+import { useEffect, useState } from 'react';
 import axios from 'axios';
+import { useAuth } from '../Helpers/useAuth';
+import { Roles } from '../Helpers/Roles';
+import { TrainerTabel } from './TrainerTabel';
+import { ClientTabel } from './ClientTabel';
+import jwtDecode from 'jwt-decode';
+import { Outlet } from 'react-router';
 
-export default class WorkoutProgramList extends Component {
-	state = {
-		workoutPrograms: [],
+export default function WorkoutProgramList(props) {
+	const [state, setState] = useState({ workoutPrograms: [] });
+	const { authed, tokenPayload } = useAuth();
+
+	const jwtToken = localStorage.getItem('jwtToken');
+	const decodedPayload = jwtDecode(jwtToken);
+	console.log(`tokenPayload: ${tokenPayload}`);
+
+	const config = {
+		headers: { Authorization: `Bearer ${jwtToken}` },
 	};
 
-	// hvordan skal jeg tjekke for hvilken user der er logget på?
-	componentDidMount() {
-		// get alle workoutPrograms still needs user login
-		axios.get(`https://afe2021fitness.azurewebsites.net/api/workoutPrograms`).then((res) => {
-			const workoutPrograms = res.data;
-			this.setState({ workoutPrograms });
-		});
-		// if user = trainer do this
-		// should be this call for trainer, but needs to check for user credentials (jwt)
-		// axios.get(`https://afe2021fitness.azurewebsites.net/api/workoutPrograms/trainer`).then((res) => {
-		// 	const workoutPrograms = res.data;
-		// 	this.setState({ workoutPrograms });
-		// });
-		// else if user = client  do this
-		// axios.get(`https://afe2021fitness.azurewebsites.net/api/workoutPrograms/client/${clientId}`).then(res => {
-		//     const workoutPrograms = res.data;
-		//     this.setState({workoutPrograms});
-		//     // if only 1 program go to workoutProgramDetails
-		// });
-	}
+	useEffect(() => {
+		async function getWorkoutPrograms() {
+			const baseUrl = 'https://afe2021fitness.azurewebsites.net/api/workoutPrograms';
+			var rolePath = '';
+			console.log(`Role: ${decodedPayload.Role}`);
+			if (decodedPayload.Role === Roles.PersonalTrainer) {
+				rolePath = '/trainer';
+			} else if (decodedPayload.Role === Roles.Client) {
+				console.log(`userID: ${decodedPayload.UserId}`);
+				rolePath = `/client/${decodedPayload.UserId}`;
+			}
 
-	render() {
-		return (
-			<div>
-				<h2>Workouts</h2>
-				<table>
-					<thead>
-						<tr>
-							<th>Program</th>
-							<th>Description</th>
-							<th>Exercises</th>
-						</tr>
-					</thead>
-					<tbody>
-						{this.state.workoutPrograms.map((program) => {
-							<tr key={program.workoutProgramId}>
-								<td>{program.name}</td>
-								<td>{program.description}</td>
-								<td>{program.exercises}</td>
-							</tr>;
-						})}
-					</tbody>
-				</table>
-			</div>
-		);
-	}
+			const res = await axios.get(`${baseUrl}${rolePath}`, config);
+			setState({ workoutPrograms: res.data });
+			console.log(state.workoutPrograms);
+		}
+		getWorkoutPrograms();
+	}, []);
+
+	return (
+		<div>
+			<h2>Workouts</h2>
+			{decodedPayload.Role == Roles.PersonalTrainer ? (
+				<TrainerTabel workoutPrograms={state.workoutPrograms} />
+			) : (
+				<ClientTabel workoutPrograms={state.workoutPrograms} />
+			)}
+			<Outlet />
+		</div>
+	);
 }

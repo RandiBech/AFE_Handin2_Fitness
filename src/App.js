@@ -9,6 +9,9 @@ import Clients from "./Client/ClientList";
 import { Roles } from "./Helpers/Roles";
 import { Navbar } from "./NavigationBar";
 import WorkoutOverview from "./WorkoutProgram/WorkoutOverview";
+import { WorkoutProgramDetails } from "./WorkoutProgram/WorkoutProgramDetail";
+import ClientList from "./Client/ClientList";
+import { ClientAdd } from "./Client/ClientAdd";
 
 function App() {
   const { logout } = useAuth();
@@ -25,24 +28,30 @@ function App() {
         </Route>
         <Route
           path="/workoutOverview"
-          element={<RequireAuth children={<WorkoutOverview />}></RequireAuth>}
+          element={<WorkoutOverview />}
+          // element={<RequireAuth children={<WorkoutOverview />}></RequireAuth>}
         />
         <Route
           path="/workoutprograms"
-          element={
-            <RequireAuth children={<WorkoutProgramList />}></RequireAuth>
-          }
-        />
+          element={<WorkoutProgramList />}
+          // {<RequireAuth children={<WorkoutProgramList />}></RequireAuth>}
+        >
+          {/* <Route path=":workoutProgramId" element={<WorkoutProgramDetails />} /> */}
+        </Route>
+        {/* <Route
+          path="/workoutPrograms/:workoutProgramId"
+          element={<WorkoutProgramDetails />}
+        /> */}
         <Route
           path="/clients"
-          element={
-            <RequireAuth
-              children={<Clients />}
-              rolesRequired={[Roles.Client]}
-            ></RequireAuth>
-          }
+          element={<ClientList />}
+          // {
+          //   <RequireAuth children={<Clients/>} rolesRequired={[Roles.Client]}>
+          //   </RequireAuth>
+          // }
         />
-        <Route path="/test" element={<Login />}></Route>
+        <Route path="clients/addClient" element={<ClientAdd />} />
+        <Route path="/login" element={<Login />} />
       </Routes>
     </div>
   );

@@ -10,7 +10,6 @@ function WorkoutOverview() {
       Authorization: `Bearer ${currentJwtToken}`,
     },
   };
-  console.log("config", config);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -25,12 +24,14 @@ function WorkoutOverview() {
 
   return (
     <ul>
+      <h3>Workout program: </h3>
+
       {data.workouts.map((item) => (
         <div class="flex-container">
-          <h3>Workout program: </h3>
-          <div>Workout id: {item.workoutProgramId}</div>
-          <div>Name: {item.name}</div>
-          <div>Description: {item.description}</div>
+          <p>
+            Workout id: {item.workoutProgramId} Name: {item.name} Description:{" "}
+            {item.description}
+          </p>
         </div>
       ))}
     </ul>

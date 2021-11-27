@@ -2,9 +2,10 @@ import { Link } from "react-router-dom";
 import Login from "./Login/Login";
 import WorkoutOverview from "./WorkoutProgram/WorkoutOverview";
 import { Roles } from "./Helpers/Roles";
-
+import "./Home.css";
+import ClientList from "./Client/ClientList";
 function Home() {
-  var role = Roles.PersonalTrainer; //TODO: Husk at rette dette til.
+  var role = "PersonalTrainer"; //localStorage.PersonalTrainer; //TODO: Husk at rette dette til.
   if (role === Roles.Manager) {
     return (
       <div>
@@ -15,16 +16,24 @@ function Home() {
   } else if (role === Roles.PersonalTrainer) {
     return (
       <div>
-        <h1>Welcome {role}!</h1>
+        <h1>Welcome: Personal Trainer!</h1>
         {/* <CreateClients />; */}
-        <WorkoutOverview />;
+        <div class="container">
+          <div id="split_left" class="parent">
+            <WorkoutOverview />
+          </div>
+
+          <div id="split_right" class="parent">
+            <ClientList />
+          </div>
+        </div>
       </div>
     );
   } else if (role === Roles.Client) {
     return (
       <div>
-        <h1>Welcome {role}!</h1>
-        <h3></h3>
+        <h1>Welcome: Client!</h1>
+        <WorkoutOverview />
       </div>
     );
   } else {

@@ -40,29 +40,11 @@ export default function WorkoutProgramList(props) {
 	return (
 		<div>
 			<h2>Workouts</h2>
-			{/* {decodedPayload.Role == Roles.PersonalTrainer ? <TrainerTabel value={state} /> : <ClientTabel value={state} />} */}
-			<table>
-				<thead>
-					<tr>
-						<th>Program</th>
-						<th>Description</th>
-						<th>Exercises</th>
-					</tr>
-				</thead>
-				<tbody>
-					{state.workoutPrograms.map((program) => (
-						<tr key={program.workoutProgramId}>
-							<td>{program.name}</td>
-							<td>{program.description}</td>
-							<td>
-								{program.exercises.map((exercise) => (
-									<li key={exercise.exerciseId}>{exercise.name}</li>
-								))}
-							</td>
-						</tr>
-					))}
-				</tbody>
-			</table>
+			{decodedPayload.Role == Roles.PersonalTrainer ? (
+				<TrainerTabel workoutPrograms={state.workoutPrograms} />
+			) : (
+				<ClientTabel workoutPrograms={state.workoutPrograms} />
+			)}
 		</div>
 	);
 }

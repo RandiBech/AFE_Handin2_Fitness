@@ -1,6 +1,6 @@
 import React from 'react';
 
-export function ClientTabel(props) {
+export function ClientTabel({ workoutPrograms }) {
 	return (
 		<table>
 			<thead>
@@ -11,7 +11,7 @@ export function ClientTabel(props) {
 				</tr>
 			</thead>
 			<tbody>
-				{props.workoutPrograms.map((program) => (
+				{workoutPrograms.map((program) => (
 					<tr key={program.workoutProgramId}>
 						<td>
 							<a href={program.workoutProgramId}>{program.name}</a>

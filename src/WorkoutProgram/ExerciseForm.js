@@ -22,11 +22,10 @@ export function ExerciseForm({ workoutProgramId }) {
 				[name]: target.value,
 			};
 		});
-		console.log(exercise);
+		// console.log(exercise);
 	}
 
 	function handleSumbmit(event) {
-		// alert('exercise: ' + exercise.name + '. Description: ' + exercise.description + '. Sets: ' + exercise.sets);
 		event.preventDefault();
 		//TODO:
 		// tilføj øvelse til WorkoutProgram man er under
@@ -34,15 +33,17 @@ export function ExerciseForm({ workoutProgramId }) {
 
 		// make post call to backend
 		// addExerciseToWorkoutProgram(workoutProgramId, { ...exercise });
-		var destruct = { ...exercise };
-		console.log(destruct);
-		addExercise(workoutProgramId, { ...exercise });
+
+		const exerciseBody = { ...exercise };
+		console.log(exerciseBody);
+		addExercise(workoutProgramId, exerciseBody);
+		// addExercise(workoutProgramId, { ...exercise });
 	}
 
 	return (
-		<form onSubmit={handleSumbmit}>
+		<div>
 			<h3>Add Exercise to Workout Program: {workoutProgramId}</h3>
-			<div>
+			<form onSubmit={handleSumbmit}>
 				<label>
 					Exercise:
 					<input name="name" type="text" value={exercise.name} onChange={handleChange} />
@@ -63,8 +64,8 @@ export function ExerciseForm({ workoutProgramId }) {
 					Time:
 					<input name="time" type="text" value={exercise.time} onChange={handleChange} />
 				</label>
-				<input type="submit" value="Submit" />
-			</div>
-		</form>
+				<input type="submit" value="Add Exercise" />
+			</form>
+		</div>
 	);
 }

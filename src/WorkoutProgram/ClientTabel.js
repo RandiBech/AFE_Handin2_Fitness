@@ -1,31 +1,37 @@
 import React from 'react';
+import { Link, Redirect } from 'react-router-dom';
 
-export function ClientTabel(props) {
+export function ClientTabel({ workoutPrograms }) {
 	return (
-		<table>
-			<thead>
-				<tr>
-					<th>Program</th>
-					<th>Description</th>
-					<th>Exercises</th>
-				</tr>
-			</thead>
-			<tbody>
-				{props.workoutPrograms.map((program) => (
-					<tr key={program.workoutProgramId}>
-						<td>
-							<a href={program.workoutProgramId}>{program.name}</a>
-							{/* {program.name} */}
-						</td>
-						<td>{program.description}</td>
-						<td>
-							{program.exercises.map((exercise) => (
-								<li key={exercise.exerciseId}>{exercise.name}</li>
-							))}
-						</td>
+		<div>
+			{/* {workoutPrograms.length = 1 ? (
+				<Redirect to={`/workoutPrograms/${workoutPrograms[0].workoutProgramId}`} />
+			) : ( */}
+			<table>
+				<thead>
+					<tr>
+						<th>Program</th>
+						<th>Description</th>
+						<th>Exercises</th>
 					</tr>
-				))}
-			</tbody>
-		</table>
+				</thead>
+				<tbody>
+					{workoutPrograms.map((program) => (
+						<tr key={program.workoutProgramId}>
+							<td>
+								<Link to={`/workoutPrograms/${program.workoutProgramId}`}>{program.name}</Link>
+							</td>
+							<td>{program.description}</td>
+							<td>
+								{program.exercises.map((exercise) => (
+									<li key={exercise.exerciseId}>{exercise.name}</li>
+								))}
+							</td>
+						</tr>
+					))}
+				</tbody>
+			</table>
+			{/* ) */}
+		</div>
 	);
 }

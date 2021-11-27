@@ -1,7 +1,7 @@
 import { useState } from 'react';
-import { addExerciseToWorkoutProgram } from '../Helpers/ExercisesApi';
+import { addExercise, addExerciseToWorkoutProgram } from '../Helpers/ExercisesApi';
 
-export function ExerciseForm() {
+export function ExerciseForm({ workoutProgramId }) {
 	const initialState = {
 		name: '',
 		description: '',
@@ -22,26 +22,28 @@ export function ExerciseForm() {
 				[name]: target.value,
 			};
 		});
-		console.log(exercise);
+		// console.log(exercise);
 	}
 
 	function handleSumbmit(event) {
-		alert('exercise: ' + exercise.name + '. Description: ' + exercise.description + '. Sets: ' + exercise.sets);
 		event.preventDefault();
 		//TODO:
 		// tilføj øvelse til WorkoutProgram man er under
 		// create new exercise in backend for this user/ trainer?
 
-		// const programId = ???? // hvordan får jeg fat i state for workoutProgramId?
-
 		// make post call to backend
-		// addExerciseToWorkoutProgram(programId, { ...exercise });
+		// addExerciseToWorkoutProgram(workoutProgramId, { ...exercise });
+
+		const exerciseBody = { ...exercise };
+		console.log(exerciseBody);
+		addExercise(workoutProgramId, exerciseBody);
+		// addExercise(workoutProgramId, { ...exercise });
 	}
 
 	return (
-		<form onSubmit={handleSumbmit}>
-			<h3>Add Exercise to Workout Program</h3>
-			<div>
+		<div>
+			<h3>Add Exercise to Workout Program: {workoutProgramId}</h3>
+			<form onSubmit={handleSumbmit}>
 				<label>
 					Exercise:
 					<input name="name" type="text" value={exercise.name} onChange={handleChange} />
@@ -62,8 +64,8 @@ export function ExerciseForm() {
 					Time:
 					<input name="time" type="text" value={exercise.time} onChange={handleChange} />
 				</label>
-				<input type="submit" value="Submit" />
-			</div>
-		</form>
+				<input type="submit" value="Add Exercise" />
+			</form>
+		</div>
 	);
 }

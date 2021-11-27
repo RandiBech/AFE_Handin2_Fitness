@@ -5,6 +5,7 @@ import { Roles } from '../Helpers/Roles';
 import { TrainerTabel } from './TrainerTabel';
 import { ClientTabel } from './ClientTabel';
 import jwtDecode from 'jwt-decode';
+import { Outlet } from 'react-router';
 
 export default function WorkoutProgramList(props) {
 	const [state, setState] = useState({ workoutPrograms: [] });
@@ -45,6 +46,7 @@ export default function WorkoutProgramList(props) {
 			) : (
 				<ClientTabel workoutPrograms={state.workoutPrograms} />
 			)}
+			<Outlet />
 		</div>
 	);
 }

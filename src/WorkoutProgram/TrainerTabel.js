@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link, NavLink } from 'react-router-dom';
 
 export function TrainerTabel({ workoutPrograms }) {
 	return (
@@ -15,7 +16,10 @@ export function TrainerTabel({ workoutPrograms }) {
 				{workoutPrograms.map((program) => (
 					<tr key={program.workoutProgramId}>
 						<td>{program.clientId}</td>
-						<td>{program.name}</td>
+						<td>
+							{/* <Link to={`/workoutprograms/${program.workoutProgramId}`}>{program.name}</Link> */}
+							<Link to={`/details/${program.workoutProgramId}`}>{program.name}</Link>
+						</td>
 						<td>{program.description}</td>
 						<td>
 							{program.exercises.map((exercise) => (

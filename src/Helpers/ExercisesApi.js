@@ -18,11 +18,24 @@ export async function addExerciseToWorkoutProgram(programId, exercise) {
 }
 
 export async function addExercise(programId, exercise) {
-	const config = localStorage.getItem('jwtToken');
+	const jwtToken = localStorage.getItem('jwtToken');
+	const config = {
+		headers: { Authorization: `Bearer ${jwtToken}` },
+	};
+
+	const body = {
+		name: exercise.name,
+		description: exercise.description,
+		sets: exercise.sets,
+		repetitions: exercise.repetitions,
+		time: exercise.time,
+	};
+
+	console.log(`exercise: ${JSON.stringify(body)}`);
 	try {
 		const resp = await axios.post(
 			`https://afe2021fitness.azurewebsites.net/api/exercises/program/${programId}`,
-			{ exercise },
+			{ body },
 			config
 		);
 		console.log(resp.data);

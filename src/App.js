@@ -7,18 +7,26 @@ import RequireAuth from "./Login/RequireAuth";
 import { useAuth } from "./Helpers/useAuth";
 import Clients from "./Client/ClientList";
 import { Roles } from "./Helpers/Roles";
-import Navbar from "./NavigationBar";
+import { Navbar } from "./NavigationBar";
+import WorkoutOverview from "./WorkoutProgram/WorkoutOverview";
 
 function App() {
   const { logout } = useAuth();
   return (
     <div className="App">
       <header className="App-header">
+        <h3>Hitness!</h3>
         {/* <RequireAuth children={<button onClick={logout}>Log out</button>}></RequireAuth> */}
       </header>
-
+      <Navbar />
       <Routes>
-        <Route path="/" element={<Home />} />
+        <Route>
+          <Route path="/" element={<Home />}></Route>
+        </Route>
+        <Route
+          path="/workoutOverview"
+          element={<RequireAuth children={<WorkoutOverview />}></RequireAuth>}
+        />
         <Route
           path="/workoutprograms"
           element={
@@ -34,7 +42,7 @@ function App() {
             ></RequireAuth>
           }
         />
-        <Route path="/login" element={<Login />} />
+        <Route path="/test" element={<Login />}></Route>
       </Routes>
     </div>
   );

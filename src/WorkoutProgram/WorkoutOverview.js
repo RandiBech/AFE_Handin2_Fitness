@@ -4,6 +4,7 @@ import axios from "axios";
 function WorkoutOverview() {
   const [data, setData] = useState({ workouts: [] });
   const currentJwtToken = localStorage.getItem("jwtToken");
+
   const config = {
     headers: {
       Authorization: `Bearer ${currentJwtToken}`,
@@ -25,7 +26,12 @@ function WorkoutOverview() {
   return (
     <ul>
       {data.workouts.map((item) => (
-        <li key={item.workoutProgramId}>{item.name}</li>
+        <div class="flex-container">
+          <h3>Workout program: </h3>
+          <div>Workout id: {item.workoutProgramId}</div>
+          <div>Name: {item.name}</div>
+          <div>Description: {item.description}</div>
+        </div>
       ))}
     </ul>
   );

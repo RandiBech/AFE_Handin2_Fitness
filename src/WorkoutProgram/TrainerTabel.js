@@ -18,7 +18,7 @@ export function TrainerTabel({ workoutPrograms }) {
 						<td>{program.clientId}</td>
 						<td>
 							{/* <Link to={`/workoutprograms/${program.workoutProgramId}`}>{program.name}</Link> */}
-							<Link to={`/details/${program.workoutProgramId}`}>{program.name}</Link>
+							<Link to={`/workoutPrograms/${program.workoutProgramId}`}>{program.name}</Link>
 						</td>
 						<td>{program.description}</td>
 						<td>

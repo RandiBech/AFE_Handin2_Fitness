@@ -26,7 +26,7 @@ function App() {
 				>
 					{/* <Route path=":workoutProgramId" element={<WorkoutProgramDetails />} /> */}
 				</Route>
-				<Route path="/details/:workoutProgramId" element={<WorkoutProgramDetails />} />
+				<Route path="/workoutPrograms/:workoutProgramId" element={<WorkoutProgramDetails />} />
 				<Route
 					path="/clients"
 					element={<ClientList />}

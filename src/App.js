@@ -27,13 +27,8 @@ function App() {
           <Route path="/" element={<Home />}></Route>
         </Route>
         <Route
-          path="/workoutOverview"
-          element={<WorkoutOverview />}
-          // element={<RequireAuth children={<WorkoutOverview />}></RequireAuth>}
-        />
-        <Route
-          path="/workoutprograms"
-          element={<WorkoutProgramList />}
+          path="/test"
+          element={<WorkoutProgramDetails />}
           // {<RequireAuth children={<WorkoutProgramList />}></RequireAuth>}
         >
           {/* <Route path=":workoutProgramId" element={<WorkoutProgramDetails />} /> */}
@@ -50,8 +45,12 @@ function App() {
           //   </RequireAuth>
           // }
         />
-        <Route path="clients/addClient" element={<ClientAdd />} />
+        <Route path="addClient" element={<ClientAdd />} />
         <Route path="/login" element={<Login />} />
+        <Route
+          path="/workoutDetails/:workoutProgramId"
+          element={<WorkoutProgramDetails />}
+        />
       </Routes>
     </div>
   );

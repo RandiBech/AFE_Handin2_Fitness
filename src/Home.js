@@ -1,9 +1,9 @@
 import { Link } from "react-router-dom";
 import Login from "./Login/Login";
-import WorkoutOverview from "./WorkoutProgram/WorkoutOverview";
 import { Roles } from "./Helpers/Roles";
 import "./Home.css";
 import ClientList from "./Client/ClientList";
+import WorkoutProgramList from "./WorkoutProgram/WorkoutProgramList";
 function Home() {
   var role = "PersonalTrainer"; //localStorage.PersonalTrainer; //TODO: Husk at rette dette til.
   if (role === Roles.Manager) {
@@ -20,7 +20,7 @@ function Home() {
         {/* <CreateClients />; */}
         <div class="container">
           <div id="split_left" class="parent">
-            <WorkoutOverview />
+            <WorkoutProgramList />
           </div>
 
           <div id="split_right" class="parent">
@@ -33,7 +33,7 @@ function Home() {
     return (
       <div>
         <h1>Welcome: Client!</h1>
-        <WorkoutOverview />
+        <WorkoutProgramList />
       </div>
     );
   } else {

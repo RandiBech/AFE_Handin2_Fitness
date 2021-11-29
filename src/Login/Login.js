@@ -1,13 +1,10 @@
 import React, { useContext, useState } from "react";
-import { useAuth } from "../Helpers/useAuth";
-import { authContext, useAuthContext } from "../Context/auth-context";
+import { useAuthContext } from "../Context/auth-context";
 
 function Login() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const { login } = useContext(authContext);
-
-    // const { login } = useAuth();
+    const { login } = useAuthContext();
 
     function handleChangeEmail(event){
         setEmail(event.target.value);

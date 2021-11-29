@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { addExercise, addExerciseToWorkoutProgram } from '../Helpers/ExercisesApi';
+import { addExercise } from '../Helpers/ExercisesApi';
 
 export function ExerciseForm({ workoutProgramId }) {
 	const initialState = {
@@ -26,17 +26,8 @@ export function ExerciseForm({ workoutProgramId }) {
 
 	function handleSumbmit(event) {
 		event.preventDefault();
-		//TODO:
-		// tilføj øvelse til WorkoutProgram man er under
-		// create new exercise in backend for this user/ trainer?
-
-		// make post call to backend
-		// addExerciseToWorkoutProgram(workoutProgramId, { ...exercise });
-
 		const exerciseBody = { ...exercise };
-		console.log(exerciseBody);
 		addExercise(workoutProgramId, exerciseBody);
-		// addExercise(workoutProgramId, { ...exercise });
 	}
 
 	return (

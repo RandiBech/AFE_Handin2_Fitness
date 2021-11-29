@@ -1,7 +1,4 @@
 import React, { useState } from "react";
-import axios from "axios";
-import { useEffect } from "react/cjs/react.development";
-import { useForm } from "react-hook-form";
 
 function PersonalTrainerAdd() {
   const [firstname, setFirstname] = useState("");

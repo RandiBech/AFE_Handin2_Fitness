@@ -4,7 +4,6 @@ import { useAuth } from "../Helpers/useAuth";
 
 const authContext = createContext();
 
-
 function useAuthContext() {
     const context = React.useContext(authContext);
     if (!context) {
@@ -14,10 +13,8 @@ function useAuthContext() {
 }
 
 function AuthProvider({children}){
-    // const auth = useAuthContext();
     const authObj = useAuth();
-    // const [auth, setAuth] = React.useState(authObj);
-    // const value = React.useMemo(() => [auth, setAuth], [auth]);
+
     return(
         <authContext.Provider value={authObj}>
             {children}

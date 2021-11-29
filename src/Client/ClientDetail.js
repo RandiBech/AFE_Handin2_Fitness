@@ -55,7 +55,7 @@ function ClientDetail() {
 
     useEffect(() => {
         async function getPrograms() {
-            const programs = await getWorkoutPrograms();
+            const programs = await getWorkoutPrograms(jwtToken);
             setWorkoutPrograms(programs);
         }
         getPrograms();

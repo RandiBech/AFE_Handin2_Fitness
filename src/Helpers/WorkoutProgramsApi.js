@@ -1,6 +1,5 @@
-export async function getWorkoutPrograms() {
+export async function getWorkoutPrograms(jwtToken) {
 	const url = 'https://afe2021fitness.azurewebsites.net/api/WorkoutPrograms/trainer';
-    const jwtToken = localStorage.getItem('jwtToken');
 
 	return await fetch(url, {
 		method: 'GET',

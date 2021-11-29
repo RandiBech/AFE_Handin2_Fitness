@@ -13,21 +13,6 @@ import ClientList from "./Client/ClientList";
 import { ClientAdd } from "./Client/ClientAdd";
 import ClientDetail from "./Client/ClientDetail";
 
-import "./App.css";
-import Login from "./Login/Login";
-import Home from "./Home";
-import { Route, Routes } from "react-router";
-import WorkoutProgramList from "./WorkoutProgram/WorkoutProgramList";
-import RequireAuth from "./Login/RequireAuth";
-import { useAuth } from "./Helpers/useAuth";
-import Clients from "./Client/ClientList";
-import { Roles } from "./Helpers/Roles";
-import { Navbar } from "./NavigationBar";
-import { WorkoutProgramDetails } from "./WorkoutProgram/WorkoutProgramDetail";
-import ClientList from "./Client/ClientList";
-import { ClientAdd } from "./Client/ClientAdd";
-import ClientDetail from "./Client/ClientDetail";
-
 function App() {
   const { logout } = useAuth();
   return (

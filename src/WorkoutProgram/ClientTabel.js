@@ -1,11 +1,14 @@
 import React from 'react';
-import { Link, Redirect } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router';
 
 export function ClientTabel({ workoutPrograms }) {
+	const navigate = useNavigate();
+
 	return (
 		<div>
-			{/* {workoutPrograms.length = 1 ? (
-				<Redirect to={`/workoutPrograms/${workoutPrograms[0].workoutProgramId}`} />
+			{/* {workoutPrograms.length == 1 ? (
+				navigate(`/workoutPrograms/${workoutPrograms[0].workoutProgramId}`)
 			) : ( */}
 			<table>
 				<thead>
@@ -31,7 +34,7 @@ export function ClientTabel({ workoutPrograms }) {
 					))}
 				</tbody>
 			</table>
-			{/* ) */}
+			{/* )} */}
 		</div>
 	);
 }

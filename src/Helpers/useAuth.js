@@ -1,6 +1,7 @@
 import { createContext, useState } from "react";
 import { useNavigate } from "react-router";
 import { useAuthContext } from "../Context/auth-context";
+import jwtDecode from 'jwt-decode';
 
 function useAuth() {
     // const [auth, setAuth] = useAuthContext();
@@ -14,10 +15,12 @@ function useAuth() {
         setAuthed(true);
         setJwtToken(jwtToken);
         const tokenArray = jwtToken.split(".");
-        const payload = tokenArray[1].split(".")[0];
 
         //window.atob decodes base-64 string: https://www.w3schools.com/jsref/met_win_atob.asp
-        setTokenPayload(window.atob(payload));
+        const payload = window.atob(tokenArray[1].split(".")[0]);
+        const payloadObj = JSON.parse(payload);
+        
+        setTokenPayload(payloadObj);
 
         navigate("/");
     }

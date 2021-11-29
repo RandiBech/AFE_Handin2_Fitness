@@ -1,7 +1,10 @@
 import { useState } from 'react';
 import { addExercise } from '../Helpers/ExercisesApi';
+import { useAuthContext } from "../Context/auth-context";
 
 export function ExerciseForm({ workoutProgramId }) {
+	const { jwtToken } = useAuthContext();
+
 	const initialState = {
 		name: '',
 		description: '',
@@ -27,7 +30,7 @@ export function ExerciseForm({ workoutProgramId }) {
 	function handleSumbmit(event) {
 		event.preventDefault();
 		const exerciseBody = { ...exercise };
-		addExercise(workoutProgramId, exerciseBody);
+		addExercise(workoutProgramId, exerciseBody, jwtToken);
 	}
 
 	return (
@@ -44,11 +47,11 @@ export function ExerciseForm({ workoutProgramId }) {
 				</label>
 				<label>
 					Set:
-					<input name="sets" type="text" value={exercise.sets} onChange={handleChange} />
+					<input name="sets" type="number" value={exercise.sets} onChange={handleChange} />
 				</label>
 				<label>
 					Reps:
-					<input name="repetitions" type="text" value={exercise.repetitions} onChange={handleChange} />
+					<input name="repetitions" type="number" value={exercise.repetitions} onChange={handleChange} />
 				</label>
 				<label>
 					Time:

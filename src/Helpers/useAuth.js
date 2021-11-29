@@ -51,6 +51,8 @@ function useAuth() {
     function logout(){
         localStorage.removeItem('jwtToken')
         setAuthed(false);
+        setTokenPayload(null);
+        navigate("/");
     }
 
     return {

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { GetAllClients } from "../Helpers/ClientsApi";
 import { makeStyles } from "@mui/styles";
 import { useNavigate } from "react-router-dom";
+import { useAuthContext } from "../Context/auth-context";
 
 const useStyles = makeStyles({
   addBtn: {
@@ -36,6 +37,7 @@ function ClientList() {
   const classes = useStyles();
   const [clients, setClients] = useState([]);
   const navigate = useNavigate();
+  const {jwtToken} = useAuthContext();
 
   // Inspo for navigation: https://stackoverflow.com/questions/62861269/attempted-import-error-usehistory-is-not-exported-from-react-router-dom
   const handleAddClient = () => {
@@ -44,7 +46,7 @@ function ClientList() {
 
   useEffect(() => {
     async function getClients() {
-      await GetAllClients().then((data) => {
+      await GetAllClients(jwtToken).then((data) => {
         setClients(data);
       });
     }

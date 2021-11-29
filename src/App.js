@@ -15,43 +15,46 @@ import { ClientAdd } from "./Client/ClientAdd";
 import ClientDetail from "./Client/ClientDetail";
 
 function App() {
-  const { logout } = useAuth();
-  return (
-    <div className="App">
-      <header className="App-header">
-        <h3>Hitness!</h3>
-        {/* <RequireAuth children={<button onClick={logout}>Log out</button>}></RequireAuth> */}
-      </header>
-      <Navbar />
-      <Routes>
-        <Route>
-          <Route path="/" element={<Home />}></Route>
-        </Route>
-        <Route
-          path="/test"
-          element={<WorkoutProgramDetails />}
-          // {<RequireAuth children={<WorkoutProgramList />}></RequireAuth>}
-        ></Route>
-        <Route path="/workoutPrograms" element={<WorkoutProgramList />} />
-        <Route
-          path="/workoutPrograms/:workoutProgramId"
-          element={<WorkoutProgramDetails />}
-        />
-        <Route
-          path="/Clients"
-          element=
-		//   {<ClientList />}
-          {
-            <RequireAuth children={<Clients/>} rolesRequired={[Roles.PersonalTrainer]}>
-            </RequireAuth>
-          }
-        />
-        <Route path="/Clients/addClient" element={<ClientAdd />} />
-        <Route path="/Clients/:id" element={<ClientDetail />} />
-        <Route path="/login" element={<Login />} />
-      </Routes>
-    </div>
-  );
+	const { logout } = useAuth();
+	return (
+		<div className="App">
+			<header className="App-header">
+				<h3>Hitness!</h3>
+				{/* <RequireAuth children={<button onClick={logout}>Log out</button>}></RequireAuth> */}
+			</header>
+			<Navbar />
+			<Routes>
+				<Route>
+					<Route path="/" element={<Home />}></Route>
+				</Route>
+				<Route
+					path="/test"
+					element={<WorkoutProgramDetails />}
+				// {<RequireAuth children={<WorkoutProgramList />}></RequireAuth>}
+				></Route>
+				<Route path="/workoutPrograms" element={<WorkoutProgramList />} />
+				<Route
+					path="/workoutPrograms/:workoutProgramId"
+					element={<WorkoutProgramDetails />}
+				/>
+				<Route
+					path="/Clients"
+					element={
+						<RequireAuth children={<Clients />} rolesRequired={[Roles.PersonalTrainer]}>
+						</RequireAuth>
+					}
+				/>
+				<Route path="/Clients/addClient" element={<ClientAdd />} />
+				<Route
+					path="/Clients/:id"
+					element={
+						<RequireAuth children={<ClientDetail />} rolesRequired={[Roles.PersonalTrainer]}>
+						</RequireAuth>
+					} />
+				<Route path="/login" element={<Login />} />
+			</Routes>
+		</div>
+	);
 }
 
 export default App;

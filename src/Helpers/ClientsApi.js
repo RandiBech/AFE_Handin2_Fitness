@@ -1,9 +1,5 @@
-import { useState } from "react/cjs/react.development";
-import { useAuth } from "./useAuth";
-
-export async function GetAllClients() {
+export async function GetAllClients(jwtToken) {
     const url = 'https://afe2021fitness.azurewebsites.net/api/Users/Clients';
-    const jwtToken = localStorage.getItem('jwtToken');
    
     return await fetch(url, {
             method: 'GET',

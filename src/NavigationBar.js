@@ -5,7 +5,7 @@ export function Navbar() {
     <nav>
       <NavLink to="/">Home</NavLink>
       &nbsp;&nbsp;&nbsp;
-      <NavLink to="/WorkoutProgramList">Workout Program</NavLink>
+      <NavLink to="/workoutPrograms">Workout Program</NavLink>
       &nbsp;&nbsp;&nbsp;
       <NavLink to="/clients">Client</NavLink>&nbsp;&nbsp;&nbsp;
       &nbsp;&nbsp;&nbsp;

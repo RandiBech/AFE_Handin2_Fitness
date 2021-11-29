@@ -3,7 +3,7 @@ import PersonalTrainerAdd from "./PersonalTrainer/PersonalTrainerAdd";
 import "./Home.css";
 
 function Home() {
-  var role = localStorage.Roles; //localStorage.PersonalTrainer; //TODO: Husk at rette dette til.
+  // var role = localStorage.Roles; //localStorage.PersonalTrainer; //TODO: Husk at rette dette til.
   var role = "Manager";
   console.log(role);
   <PersonalTrainerAdd />;

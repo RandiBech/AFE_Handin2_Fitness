@@ -4,6 +4,9 @@ import { getWorkoutPrograms, addWorkoutProgramForClient } from '../Helpers/Worko
 import { makeStyles } from '@mui/styles';
 
 const useStyles = makeStyles({
+    fullwidth:{
+        width: '100vw'
+    },
     leftColoumn: {
         float: 'left',
         width: '50%',
@@ -21,12 +24,14 @@ const useStyles = makeStyles({
         textAlign: 'left',
         margin: '8px 0',
         cursor: 'pointer',
-        backgroundColor: 'lightgray'
-    },
-    line: {
-        height: '0.5px',
-        backgroundColor: 'black',
-        width: '100%'
+        width: '80%',
+        border: '1px solid #498787',
+        borderRadius: '8px',
+        padding: '4px 8px',
+        "&:hover": {
+            backgroundColor: '#498787',
+            color: 'white'
+        }
     },
     formItem: {
         textAlign: 'left',
@@ -92,7 +97,7 @@ function ClientDetail() {
     }
 
     return (
-        <div>
+        <div >
             <h2>Client details</h2>
             <p>
                 Name: {client.firstName} {client.lastName}
@@ -107,7 +112,6 @@ function ClientDetail() {
                             <div key={program.workoutProgramId} className={classes.programItem} onClick={() => handleClickWorkoutProgram(program)}>
                                 <div>{program.name}</div>
                                 <div>{program.description}</div>
-                                <div className={classes.line}></div>
                             </div>
                         ))}
                     </div>

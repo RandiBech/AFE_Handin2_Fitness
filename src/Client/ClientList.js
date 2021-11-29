@@ -16,13 +16,12 @@ const useStyles = makeStyles({
     },
     clients: {
         padding: '0 20px',
-        columnCount: 1
     },
     clientItem: {
         textAlign: 'left',
         margin: '8px 0',
         cursor: 'pointer',
-        width: '80%',
+        width: '500px',
         border: '1px solid #498787',
         borderRadius: '8px',
         padding: '4px 8px',
@@ -47,11 +46,9 @@ function ClientList() {
     async function getClients() {
       await GetAllClients().then((data) => {
         setClients(data);
-        console.log("data", data);
       });
     }
     getClients();
-    console.log(clients);
   }, []);
 
   function handleClientClick(client) {
@@ -64,7 +61,7 @@ function ClientList() {
         <div>
             <div>
                 <h2>Clients</h2>
-                <button className={classes.addBtn}>Add client</button>
+                <button className={classes.addBtn} onClick={handleAddClient}>Add client</button>
             </div>
             <div className={classes.clients}>
                 {clients.map((client, i) =>

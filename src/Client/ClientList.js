@@ -34,27 +34,33 @@ const useStyles = makeStyles({
 })
 
 function ClientList() {
-    const classes = useStyles();
-    const [clients, setClients] = useState([]);
-    const navigate = useNavigate();
-    useEffect(() => {
-        async function getClients() {
-            await GetAllClients().then(data => {
-                setClients(data)
-                console.log('data', data)
-            });
-        }
-        getClients();
-        console.log(clients);
-    }, []);
+  const classes = useStyles();
+  const [clients, setClients] = useState([]);
+  const navigate = useNavigate();
 
-    function handleClientClick(client) {
-        navigate(`/Clients/${client.userId}`, { state: client })
+  // Inspo for navigation: https://stackoverflow.com/questions/62861269/attempted-import-error-usehistory-is-not-exported-from-react-router-dom
+  const handleAddClient = () => {
+    navigate("addClient");
+  };
+
+  useEffect(() => {
+    async function getClients() {
+      await GetAllClients().then((data) => {
+        setClients(data);
+        console.log("data", data);
+      });
     }
+    getClients();
+    console.log(clients);
+  }, []);
 
-    if (clients.length <= 0) return <div>loading...</div>;
+  function handleClientClick(client) {
+    navigate("/Clients/" + client.userId, { state: client });
+  }
 
-    return (
+  if (clients.length <= 0) return <div>loading...</div>;
+
+  return (
         <div>
             <div>
                 <h2>Clients</h2>
@@ -69,6 +75,6 @@ function ClientList() {
                 ))}
             </div>
         </div>
-    )
+    );
 }
 export default ClientList;

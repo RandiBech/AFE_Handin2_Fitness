@@ -1,15 +1,18 @@
 import Login from "./Login/Login";
 import PersonalTrainerAdd from "./PersonalTrainer/PersonalTrainerAdd";
 import "./Home.css";
+import { Roles } from "./Helpers/Roles";
+import { useAuthContext } from "./Context/auth-context";
 
 function Home() {
-  // var role = localStorage.Roles; //localStorage.PersonalTrainer; //TODO: Husk at rette dette til.
-  var role = "Manager";
-  console.log(role);
-  <PersonalTrainerAdd />;
-  if (role != null) {
-    return <h1>Welcome</h1>;
-  } else if ((role = "Manager")) {
+  const { tokenPayload, jwtToken } = useAuthContext();
+  var role = tokenPayload.Role;
+
+  if (role === Roles.Client) {
+    return <h1>Welcome Client</h1>;
+  } else if (role === Roles.PersonalTrainer) {
+    return <h1>Welcome Person Trainer</h1>;
+  } else if ((role = Roles.Manager)) {
     return <PersonalTrainerAdd />;
   } else
     return (

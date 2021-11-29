@@ -1,45 +1,45 @@
-import { useEffect, useState } from 'react';
-import axios from 'axios';
-import { Roles } from '../Helpers/Roles';
-import { TrainerTabel } from './TrainerTabel';
-import { ClientTabel } from './ClientTabel';
-import jwtDecode from 'jwt-decode';
-import { Outlet } from 'react-router';
+import { useEffect, useState } from "react";
+import axios from "axios";
+import { Roles } from "../Helpers/Roles";
+import { TrainerTabel } from "./TrainerTabel";
+import { ClientTabel } from "./ClientTabel";
+import { Outlet } from "react-router";
+import { useAuthContext } from "../Context/auth-context";
 
 export default function WorkoutProgramList(props) {
-	const [state, setState] = useState({ workoutPrograms: [] });
+  const [state, setState] = useState({ workoutPrograms: [] });
+  const { tokenPayload, jwtToken } = useAuthContext();
 
-	const jwtToken = localStorage.getItem('jwtToken');
-	const decodedPayload = jwtDecode(jwtToken);
+  const config = {
+    headers: { Authorization: `Bearer ${jwtToken}` },
+  };
 
-	const config = {
-		headers: { Authorization: `Bearer ${jwtToken}` },
-	};
+  useEffect(() => {
+    async function getWorkoutPrograms() {
+      const baseUrl =
+        "https://afe2021fitness.azurewebsites.net/api/workoutPrograms";
+      var rolePath = "";
+      if (tokenPayload.Role === Roles.PersonalTrainer) {
+        rolePath = "/trainer";
+      } else if (tokenPayload.Role === Roles.Client) {
+        rolePath = `/client/${tokenPayload.UserId}`;
+      }
 
-	useEffect(() => {
-		async function getWorkoutPrograms() {
-			const baseUrl = 'https://afe2021fitness.azurewebsites.net/api/workoutPrograms';
-			var rolePath = '';
-			if (decodedPayload.Role === Roles.PersonalTrainer) {
-				rolePath = '/trainer';
-			} else if (decodedPayload.Role === Roles.Client) {
-				rolePath = `/client/${decodedPayload.UserId}`;
-			}
+      const res = await axios.get(`${baseUrl}${rolePath}`, config);
+      setState({ workoutPrograms: res.data });
+    }
+    getWorkoutPrograms();
+  }, []);
 
-			const res = await axios.get(`${baseUrl}${rolePath}`, config);
-			setState({ workoutPrograms: res.data });
-		}
-		getWorkoutPrograms();
-	}, []);
-
-	return (
-		<div>
-			<h2>Workouts</h2>
-			{decodedPayload.Role === Roles.PersonalTrainer ? (
-				<TrainerTabel workoutPrograms={state.workoutPrograms} />
-			) : ( <ClientTabel workoutPrograms={state.workoutPrograms} />
-			)}
-			<Outlet />
-		</div>
-	);
+  return (
+    <div>
+      <h2>Workouts</h2>
+      {jwtToken.Role === Roles.PersonalTrainer ? (
+        <TrainerTabel workoutPrograms={state.workoutPrograms} />
+      ) : (
+        <ClientTabel workoutPrograms={state.workoutPrograms} />
+      )}
+      <Outlet />
+    </div>
+  );
 }

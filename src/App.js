@@ -12,6 +12,7 @@ import WorkoutOverview from "./WorkoutProgram/WorkoutOverview";
 import { WorkoutProgramDetails } from "./WorkoutProgram/WorkoutProgramDetail";
 import ClientList from "./Client/ClientList";
 import { ClientAdd } from "./Client/ClientAdd";
+import ClientDetail from "./Client/ClientDetail";
 
 function App() {
   const { logout } = useAuth();
@@ -26,25 +27,27 @@ function App() {
         <Route>
           <Route path="/" element={<Home />}></Route>
         </Route>
-        {/* <Route
+        <Route
+          path="/test"
+          element={<WorkoutProgramDetails />}
+          // {<RequireAuth children={<WorkoutProgramList />}></RequireAuth>}
+        ></Route>
+        <Route path="/workoutPrograms" element={<WorkoutProgramList />} />
+        <Route
           path="/workoutPrograms/:workoutProgramId"
           element={<WorkoutProgramDetails />}
-        /> */}
+        />
         <Route
-          path="/clients"
+          path="/Clients"
           element={<ClientList />}
           // {
           //   <RequireAuth children={<Clients/>} rolesRequired={[Roles.Client]}>
           //   </RequireAuth>
           // }
         />
-        <Route path="clients/addClient" element={<ClientAdd />} />
+        <Route path="/Clients/addClient" element={<ClientAdd />} />
+        <Route path="/Clients/:id" element={<ClientDetail />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/WorkoutProgramList" element={<WorkoutProgramList />} />
-        <Route
-          path="/workoutDetails/:workoutProgramId"
-          element={<WorkoutProgramDetails />}
-        />
       </Routes>
     </div>
   );

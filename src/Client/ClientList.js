@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { GetAllClients } from "../Helpers/ClientsApi";
 import { makeStyles } from "@mui/styles";
-import { ClientAdd } from "./ClientAdd";
-import { Route } from "react-router";
 import { useNavigate } from "react-router-dom";
 
 const useStyles = makeStyles({
@@ -14,6 +12,7 @@ const useStyles = makeStyles({
     border: "none",
     margin: "16px",
     alignSelf: "end",
+    color: "white",
   },
   clients: {
     padding: "0 20px",
@@ -21,11 +20,15 @@ const useStyles = makeStyles({
   clientItem: {
     textAlign: "left",
     margin: "8px 0",
-  },
-  line: {
-    height: "0.5px",
-    backgroundColor: "black",
-    width: "80%",
+    cursor: "pointer",
+    width: "500px",
+    border: "1px solid #498787",
+    borderRadius: "8px",
+    padding: "4px 8px",
+    "&:hover": {
+      backgroundColor: "#498787",
+      color: "white",
+    },
   },
 });
 
@@ -43,11 +46,9 @@ function ClientList() {
     async function getClients() {
       await GetAllClients().then((data) => {
         setClients(data);
-        console.log("data", data);
       });
     }
     getClients();
-    console.log(clients);
   }, []);
 
   function handleClientClick(client) {
@@ -66,26 +67,15 @@ function ClientList() {
       </div>
       <div className={classes.clients}>
         {clients.map((client, i) => (
-          <>
-            <button
-              onClick={() => handleClientClick(client)}
-              key={i}
-              className={classes.clientItem}
-            >
-              {client.firstName} {client.lastName}, email: {client.email}
-            </button>
-
-            {/* <Link to={{ 
-                    pathname: "/Clients/" + client.userId, 
-                    state: client 
-                    }} key={i} className={classes.clientItem}>
-                    {client.firstName} {client.lastName}, email: {client.email}
-                </Link> */}
-            <div className={classes.line}></div>
-          </>
+          <div
+            onClick={() => handleClientClick(client)}
+            key={i}
+            className={classes.clientItem}
+          >
+            {client.firstName} {client.lastName}, email: {client.email}
+          </div>
         ))}
       </div>
-      <div className={classes.line}></div>)
     </div>
   );
 }

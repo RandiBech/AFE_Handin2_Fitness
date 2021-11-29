@@ -8,7 +8,6 @@ import { useAuth } from "./Helpers/useAuth";
 import Clients from "./Client/ClientList";
 import { Roles } from "./Helpers/Roles";
 import { Navbar } from "./NavigationBar";
-import WorkoutOverview from "./WorkoutProgram/WorkoutOverview";
 import { WorkoutProgramDetails } from "./WorkoutProgram/WorkoutProgramDetail";
 import ClientList from "./Client/ClientList";
 import { ClientAdd } from "./Client/ClientAdd";
@@ -32,18 +31,27 @@ function App() {
           element={<WorkoutProgramDetails />}
           // {<RequireAuth children={<WorkoutProgramList />}></RequireAuth>}
         ></Route>
-        <Route path="/workoutPrograms" element={<WorkoutProgramList />} />
+        <Route
+          path="/workoutPrograms"
+          element={
+            <RequireAuth
+              children={<WorkoutProgramList />}
+              rolesRequired={[Roles.PersonalTrainer, Roles.Client]}
+            ></RequireAuth>
+          }
+        />
         <Route
           path="/workoutPrograms/:workoutProgramId"
           element={<WorkoutProgramDetails />}
         />
         <Route
           path="/Clients"
-          element=
-		//   {<ClientList />}
-          {
-            <RequireAuth children={<Clients/>} rolesRequired={[Roles.PersonalTrainer]}>
-            </RequireAuth>
+          element={
+            //   {<ClientList />}
+            <RequireAuth
+              children={<Clients />}
+              rolesRequired={[Roles.PersonalTrainer]}
+            ></RequireAuth>
           }
         />
         <Route path="/Clients/addClient" element={<ClientAdd />} />

@@ -2,12 +2,13 @@ import React, { useState } from "react";
 import axios from "axios";
 import { useEffect } from "react/cjs/react.development";
 import { useForm } from "react-hook-form";
-
+import { useAuthContext } from "../Context/auth-context";
 function PersonalTrainerAdd() {
   const [firstname, setFirstname] = useState("");
   const [lastname, setLastname] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const { tokenPayload, jwtToken } = useAuthContext();
 
   const handleSumitClient = async () => {
     fetch("https://afe2021fitness.azurewebsites.net/api/Users", {
@@ -15,7 +16,7 @@ function PersonalTrainerAdd() {
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
-        Authorization: "Bearer " + localStorage.getItem("jwtToken"),
+        Authorization: "Bearer " + jwtToken,
       },
       body: JSON.stringify({
         firstName: firstname,

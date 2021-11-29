@@ -5,8 +5,9 @@ export function Navbar() {
     <nav>
       <NavLink to="/">Home</NavLink>
       &nbsp;&nbsp;&nbsp;
+      <NavLink to="/WorkoutProgramList">Workout Program</NavLink>
+      &nbsp;&nbsp;&nbsp;
       <NavLink to="/clients">Client</NavLink>&nbsp;&nbsp;&nbsp;
-      <NavLink to="/Test">Test</NavLink>
       &nbsp;&nbsp;&nbsp;
     </nav>
   );

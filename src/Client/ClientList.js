@@ -41,50 +41,52 @@ function ClientList() {
 
   useEffect(() => {
     async function getClients() {
-        await GetAllClients().then(data => {
-            setClients(data)
-            console.log('data', data)
-        });
+      await GetAllClients().then((data) => {
+        setClients(data);
+        console.log("data", data);
+      });
     }
     getClients();
     console.log(clients);
-}, []);
+  }, []);
 
-function handleClientClick(client) {
-    navigate('/Clients/' + client.userId, { state: client })
-}
+  function handleClientClick(client) {
+    navigate("/Clients/" + client.userId, { state: client });
+  }
 
-if (clients.length <= 0) return <div>loading...</div>;
+  if (clients.length <= 0) return <div>loading...</div>;
 
-return (
+  return (
     <div>
-        <div>
-            <h2>Clients</h2>
-            <button className={classes.addBtn}>Add client</button>
-        </div>
-        <div className={classes.clients}>
-            {clients.map((client, i) =>
-            (
-                <>
-                <button onClick={() => handleClientClick(client)} key={i} className={classes.clientItem}>
-                    {client.firstName} {client.lastName}, email: {client.email}
-                </button>
-                
-                {/* <Link to={{ 
+      <div>
+        <h2>Clients</h2>
+        <button className={classes.addBtn} onClick={handleAddClient}>
+          Add client
+        </button>
+      </div>
+      <div className={classes.clients}>
+        {clients.map((client, i) => (
+          <>
+            <button
+              onClick={() => handleClientClick(client)}
+              key={i}
+              className={classes.clientItem}
+            >
+              {client.firstName} {client.lastName}, email: {client.email}
+            </button>
+
+            {/* <Link to={{ 
                     pathname: "/Clients/" + client.userId, 
                     state: client 
                     }} key={i} className={classes.clientItem}>
                     {client.firstName} {client.lastName}, email: {client.email}
                 </Link> */}
-                    <div className={classes.line}></div>
-                </>
-            ))}
-        </div>
-        <div className={classes.line}></div>
-      </>
-    ))}
-  </div>
-</div>
-);
+            <div className={classes.line}></div>
+          </>
+        ))}
+      </div>
+      <div className={classes.line}></div>)
+    </div>
+  );
 }
 export default ClientList;

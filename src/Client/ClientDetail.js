@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useLocation } from "react-router";
+import { useLocation, useNavigate } from "react-router";
 import { getWorkoutPrograms, addWorkoutProgramForClient } from '../Helpers/WorkoutProgramsApi';
 import { makeStyles } from '@mui/styles';
 
@@ -44,12 +44,12 @@ function ClientDetail() {
     const [workoutPrograms, setWorkoutPrograms] = useState([]);
     const [newProgramName, setNewProgramName] = useState('');
     const [newProgramDescription, setNewProgramDescription] = useState('');
+    const navigate = useNavigate();
 
     useEffect(() => {
         async function getPrograms() {
             const programs = await getWorkoutPrograms();
             setWorkoutPrograms(programs);
-            console.log('programs', programs);
         }
         getPrograms();
     }, []); 
@@ -74,19 +74,21 @@ function ClientDetail() {
         console.log('payload', payloadObj.UserId);
 
         const workoutProgramRequest = {
-            workoutProgramId: 0,
             name: newProgramName,
             description: newProgramDescription,
             exercises: [],
             personalTrainerId: payloadObj.UserId,
             clientId: client.userId
         }
-        //fejler CORS fejl
         await addWorkoutProgramForClient(workoutProgramRequest);
 
         const newPrograms = workoutPrograms;
         newPrograms.push(workoutProgramRequest);
         setWorkoutPrograms(newPrograms);
+    }
+
+    function handleClickWorkoutProgram(program){
+        navigate(`/workoutPrograms/${program.workoutProgramId}`, { state: program })
     }
 
     return (
@@ -102,7 +104,7 @@ function ClientDetail() {
                     <h4>{client.firstName}'s workout programs:</h4>
                     <div className={classes.programs}>
                         {workoutPrograms.map((program) => (
-                            <div key={program.workoutProgramId} className={classes.programItem}>
+                            <div key={program.workoutProgramId} className={classes.programItem} onClick={() => handleClickWorkoutProgram(program)}>
                                 <div>{program.name}</div>
                                 <div>{program.description}</div>
                                 <div className={classes.line}></div>
@@ -123,7 +125,6 @@ function ClientDetail() {
                         </div>
                         <input type="submit" value="Submit" />
                     </form>
-                    
                 </div>
         </div>
     )

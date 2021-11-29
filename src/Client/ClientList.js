@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { GetAllClients } from '../Helpers/ClientsApi';
 import { makeStyles } from '@mui/styles';
-import { Link } from 'react-router-dom';
 import { useNavigate } from "react-router-dom";
 
 const useStyles = makeStyles({
@@ -12,21 +11,26 @@ const useStyles = makeStyles({
         borderRadius: '4px',
         border: 'none',
         margin: '16px',
-        alignSelf: 'end'
+        alignSelf: 'end',
+        color: 'white'
     },
     clients: {
-        padding: '0 20px'
+        padding: '0 20px',
+        columnCount: 1
     },
     clientItem: {
         textAlign: 'left',
         margin: '8px 0',
-        cursor: 'pointer'
+        cursor: 'pointer',
+        width: '80%',
+        border: '1px solid #498787',
+        borderRadius: '8px',
+        padding: '4px 8px',
+        "&:hover": {
+            backgroundColor: '#498787',
+            color: 'white'
+        }
     },
-    line: {
-        height: '0.5px',
-        backgroundColor: 'black',
-        width: '80%'
-    }
 })
 
 function ClientList() {
@@ -45,7 +49,7 @@ function ClientList() {
     }, []);
 
     function handleClientClick(client) {
-        navigate('/Clients/' + client.userId, { state: client })
+        navigate(`/Clients/${client.userId}`, { state: client })
     }
 
     if (clients.length <= 0) return <div>loading...</div>;
@@ -59,19 +63,9 @@ function ClientList() {
             <div className={classes.clients}>
                 {clients.map((client, i) =>
                 (
-                    <>
-                    <button onClick={() => handleClientClick(client)} key={i} className={classes.clientItem}>
+                    <div onClick={() => handleClientClick(client)} key={i} className={classes.clientItem}>
                         {client.firstName} {client.lastName}, email: {client.email}
-                    </button>
-                    
-                    {/* <Link to={{ 
-                        pathname: "/Clients/" + client.userId, 
-                        state: client 
-                        }} key={i} className={classes.clientItem}>
-                        {client.firstName} {client.lastName}, email: {client.email}
-                    </Link> */}
-                        <div className={classes.line}></div>
-                    </>
+                    </div>
                 ))}
             </div>
         </div>

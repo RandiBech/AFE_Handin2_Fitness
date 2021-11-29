@@ -1,31 +1,58 @@
 import React from 'react';
-import { Link, NavLink } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import { makeStyles } from '@mui/styles';
+
+const useStyles = makeStyles({
+	workouts: {
+		padding: '0 20px',
+		borderCollapse: 'collapse',
+		width: '100%',
+		border: '3px solid #ddd',
+		textAlign: 'left',
+		margin: '8px 0',
+	},
+	workoutItem: {
+		textAlign: 'left',
+		padding: '8px 4px',
+		cursor: 'pointer',
+		border: '3px solid #ddd'
+	},
+	multirow: {
+		columnCount: 3,
+		border: '1px solid #ddd'
+	},
+	td: {
+		border: '1px solid #ddd'
+	}
+})
 
 export function TrainerTabel({ workoutPrograms }) {
+	const classes = useStyles();
+
 	return (
-		<table>
+		<table className={classes.workouts}>
 			<thead>
 				<tr>
-					<th>Client</th>
-					<th>Program</th>
-					<th>Description</th>
-					<th>Exercises</th>
+					<th className={classes.td}>Client</th>
+					<th className={classes.td}>Program</th>
+					<th className={classes.td}>Description</th>
+					<th className={classes.td}>Exercises</th>
 				</tr>
 			</thead>
 			<tbody>
 				{workoutPrograms.map((program) => (
-					<tr key={program.workoutProgramId}>
-						<td>{program.clientId}</td>
-						<td>
-							{/* <Link to={`/workoutprograms/${program.workoutProgramId}`}>{program.name}</Link> */}
-							<Link to={`/workoutPrograms/${program.workoutProgramId}`}>{program.name}</Link>
+					<tr key={program.workoutProgramId} className={classes.workoutItem}>
+						<td className={classes.td}>{program.clientId}</td>
+						<td className={classes.td}>
+							<Link to={`/workoutPrograms/${program.workoutProgramId}`} state={program}>{program.name}</Link>
 						</td>
-						<td>{program.description}</td>
-						<td>
+						<td className={classes.td}>{program.description}</td>
+						<td className={classes.multirow}>
 							{program.exercises.map((exercise) => (
 								<li key={exercise.exerciseId}>{exercise.name}</li>
 							))}
 						</td>
+
 					</tr>
 				))}
 			</tbody>

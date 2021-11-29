@@ -13,7 +13,7 @@ export default function WorkoutProgramList(props) {
 
 	const jwtToken = localStorage.getItem('jwtToken');
 	const decodedPayload = jwtDecode(jwtToken);
-	console.log(`tokenPayload: ${tokenPayload}`);
+	console.log(`tokenPayload: `,tokenPayload);
 
 	const config = {
 		headers: { Authorization: `Bearer ${jwtToken}` },
@@ -33,7 +33,7 @@ export default function WorkoutProgramList(props) {
 
 			const res = await axios.get(`${baseUrl}${rolePath}`, config);
 			setState({ workoutPrograms: res.data });
-			console.log(state.workoutPrograms);
+			console.log('list',res.data);
 		}
 		getWorkoutPrograms();
 	}, []);
@@ -41,10 +41,9 @@ export default function WorkoutProgramList(props) {
 	return (
 		<div>
 			<h2>Workouts</h2>
-			{decodedPayload.Role == Roles.PersonalTrainer ? (
+			{decodedPayload.Role === Roles.PersonalTrainer ? (
 				<TrainerTabel workoutPrograms={state.workoutPrograms} />
-			) : (
-				<ClientTabel workoutPrograms={state.workoutPrograms} />
+			) : ( <ClientTabel workoutPrograms={state.workoutPrograms} />
 			)}
 			<Outlet />
 		</div>
